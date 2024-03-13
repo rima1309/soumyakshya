@@ -1,0 +1,169 @@
+
+    
+*{
+    margin: 0;
+    padding: 0;        
+    font-family: 'Poppins',sans-serif;
+}
+.banner{
+    width: 100%;
+    height: 100vh;
+    background-image: url("/static/images/cover-normal.jpg");    
+    background-size: cover;
+    background-position: center;    
+    
+}
+.navbar{
+    width: 100%;
+    margin: auto;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+.logo{
+    width: 200px;
+    cursor: pointer;
+}
+
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: darkblue;
+    text-transform: uppercase;
+    
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #0f034e;    
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+
+}
+.content{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: black;
+
+}
+.content h1{
+    font-size: 50px;
+    margin-top: 20px;
+}
+.content p{
+    margin: 20px auto;
+    font-weight: 100;
+    line-height: 25px;
+}
+button{
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #001b96;
+    background: transparent;
+    color: rgb(8, 10, 119);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+span{
+    background: #81ecec;
+    height: 100%;
+    width: 0;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+button:hover span{
+    width: 100%;
+
+}
+button:hover{
+    border: none;
+}
+input[type=file]::file-selector-button {
+    width: 100px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #001b96;
+    background: transparent;
+    color: rgb(8, 10, 119);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    
+  }
+  
+input[type=file]::file-selector-button:hover {
+    background-color: #81ecec;
+    border: none;
+    
+  }
+
+.custom-select {
+    min-width: 350px;
+    position: relative;
+  }
+
+select{    
+    width: 200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid #001b96;
+    background: transparent;
+    color: rgb(8, 10, 119);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+.custom-select::before,
+.custom-select::after {
+    --size: 0.3rem;
+    content: "";
+    position: absolute;
+    right: 1rem;
+    pointer-events: none;
+  }
+
+select:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+option{
+    color: rgb(4, 36, 95);
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    
+  }
+
+
+
+

@@ -2,8 +2,11 @@ from flask import Flask, render_template, request, send_from_directory
 import pandas as pd
 import os
 import numpy as np
-#import scikit-learn
+#import scikit-learn 
 #from scikit-learn.impute import SimpleImputer #Import SimpleImputer class from sklearn.impute
+import seaborn as sns
+import matplotlib.pyplot as plt
+#%matplotlib inline
 
 app = Flask(__name__)
 
@@ -12,7 +15,7 @@ options1 = ["Select an Option", "Irrelevant Data", "Duplicate Data", "Missing Da
 options2 = {
     "Irrelevant Data": ["Irrelevant Data"],
     "Duplicate Data": ["Duplicate Data"],
-    "Missing Data": ["Dropna", "Fillna", "Replace", "Interpolation", "SimpleImputer", "Mean", "Median", "Mode", "List & Pair Deletion", "Prediction Model"],
+    "Missing Data": ["Dropna", "Fillna", "Replace", "Interpolation", "SimpleImputer", "Mean", "Median", "Mode", "List Wise Deletion", "Pair Wise Deletion", "Prediction Model"],
     "Outlier": ["IQR", "ZScore", "Standard Deviation", "Box Plot"],
     "Structural Data": ["Structural Error"],
 }
@@ -94,16 +97,53 @@ def upload_file(option):
                 #cleaned_data = data.interpolate(method='linear', inplace=True)  # --Replace missing values with linear interpolation
                 data = data.set_index("Date")
                 cleaned_data = data.interpolate(method="time")
-                
+            
+                           
+            
             #Clean Missing Data  (Missing values can be imputed with a provided constant value)
             #if option == 'SimpleImputer':                
             # we can directly use the fi_transform inplace of fit and then transform
              #   imputer=SimpleImputer(missing_values=np.nan,strategy='mean')
             # Impute NaN value in columns "Day_Temp" with mean value of respected column.
               #  cleaned_data.iloc[:,3:4]=imputer.fit_transform(data.iloc[:,3:4])
+              
+            #Clean Missing Data  (Mean - Impute missing age with Mean (Numerical Variable))
+            if option == 'Mean':
+                cleaned_data = data['Age'].fillna(data['Age'].mean())
+            
+            #Clean Missing Data  (Median - Impute missing age with Median (Numerical Variable))
+            if option == 'Median':
+                cleaned_data = data['Age'].fillna(data['Age'].median())
+                
+            #Clean Missing Data  (Mode - Impute Embarked with Mode)
+            if option == 'Median':
+                cleaned_data = data["Embarked"].replace(np.NaN,data["Embarked"].mode()[0]) 
+                
+            #Clean Outliers  (By using method IQR(Inter Quartile Range))
+            if option == 'IQR':     
+    
+            
+                data['Age']= data.Age.fillna( data.Age.mean())
+                # data =  data.head() 
+                out=['Age'
+                    ,'Fare'
+                    ]
+                for i in out:
+                    q25,q75=data[i].quantile([.25,.75])
+                    iqr=q75-q25
+                    minimum=q25-(iqr*1.5)
+                    maximum=q75+(iqr*1.5)
+                #assigning nan to the outliers
+                    data[i].values[data[i] > maximum] = np.nan
+                    data[i].values[data[i] < minimum] = np.nan
+                    
+                    #data = data.isnull().sum()
+                    cleaned_data = data.head()
                 
                 
-                   
+                
+                
+                     
             # Save the cleaned data to a new CSV file
             cleaned_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'cleaned_' + filename)
             

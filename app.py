@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, send_from_directory
 import pandas as pd
 import os
+import numpy as np
+#import scikit-learn
+#from scikit-learn.impute import SimpleImputer #Import SimpleImputer class from sklearn.impute
 
 app = Flask(__name__)
 
@@ -80,6 +83,26 @@ def upload_file(option):
             #Clean Missing Data  (Replace NaN values with any Values Using Fillna)
             if option == 'Fillna':
                 cleaned_data = data.fillna(0)
+                
+            #Clean Missing Data  (Replace NaN values with any constant "0" Using Replace)
+            if option == 'Replace':
+                cleaned_data = data.replace(np.nan,0)
+                
+            #Clean Missing Data  (Replace with some intermediate value)
+            if option == 'Interpolation':
+                
+                #cleaned_data = data.interpolate(method='linear', inplace=True)  # --Replace missing values with linear interpolation
+                data = data.set_index("Date")
+                cleaned_data = data.interpolate(method="time")
+                
+            #Clean Missing Data  (Missing values can be imputed with a provided constant value)
+            #if option == 'SimpleImputer':                
+            # we can directly use the fi_transform inplace of fit and then transform
+             #   imputer=SimpleImputer(missing_values=np.nan,strategy='mean')
+            # Impute NaN value in columns "Day_Temp" with mean value of respected column.
+              #  cleaned_data.iloc[:,3:4]=imputer.fit_transform(data.iloc[:,3:4])
+                
+                
                    
             # Save the cleaned data to a new CSV file
             cleaned_filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'cleaned_' + filename)

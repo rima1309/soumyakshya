@@ -4,3 +4,8 @@ pandas>=2.0.3
 sns==0.1
 seaborn==0.13.2
 quantile==0.0.1
+
+numpy>==1.19.5
+sklearn==0.23.2
+sciPy>=1.6.0
+scikit-learn>=1.4.1
